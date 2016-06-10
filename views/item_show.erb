@@ -1,0 +1,22 @@
+<h3 class="todo_item_title"><%= @model.name %></h3>
+<% m = @model.id %>
+<% @task = TodoItem.where(model_id: @model.id) %>
+<ul>
+<div class ="row clearfix">
+<% @task.each do |task| %>
+
+<li>
+	<p class="todo_item_subtile"><%= task.content %></p>
+	<form onsubmit="return confirm('Are you sure you want to delete?')" action="/delete/<%= task.id %>" method="POST">
+    	<input type="hidden" name="_method" value="DELETE">
+    	<button type="submit">Delete</button></form>
+</li>
+<% end %><p></ul>
+<h5>ADD Task
+<form action="/submit/<%= @model.id %>" method="POST">
+	<input type="text" name="todo_item[content]" value="" />
+	<input type="submit" value="Submit" />
+	<input type="hidden" name="todo_item[model_id]" value="<%= m %>" />
+</form></h5></p></div>
+<a href="/">Home</a>
+

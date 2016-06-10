@@ -1,0 +1,20 @@
+<h2 class="todo_list_title">Todo Home</h2>
+<ul>
+	<% @models.each do |model| %>
+	<li>
+		<p class="todo_list_subtile"><a href="<%= model.id %>"><%= model.name %></a>
+		<% idx =  model.id %>
+		<form onsubmit="return confirm('Are you sure you want to delete?')" action="/<%= model.id %>" method="POST">
+    	<input type="hidden" name="_method" value="DELETE">
+    	<button type="submit">Delete</button>
+  </form></p>
+	</li>
+		
+	<% end %>
+</ul>
+Add New TODO
+<form action="/submit" method="POST">
+	<input type="text" name="model[name]" value="" />
+	<input type="submit" value="Submit" />
+</form>
+<a href="/">Home</a>
