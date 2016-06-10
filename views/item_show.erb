@@ -1,22 +1,219 @@
-<h3 class="todo_item_title"><%= @model.name %></h3>
+<!DOCTYPE html>
+<html><head><style>$white_opaque: rgba(250,250,250, .3);
+$dark: #1F7972;
+
+* {
+	box-sizing: border-box;
+}
+html {
+	height: 100%;
+}
+body {
+	height: 100%;
+	background: -webkit-linear-gradient(40deg, #4CBBC4 10%, #EAECC6 100%);
+	background: -moz-linear-gradient(40deg, #4CBBC4 10%, #EAECC6 100%);
+	background: -ms-linear-gradient(40deg, #4CBBC4 10%, #EAECC6 100%);
+	background: -o-linear-gradient(40deg, #4CBBC4 10%, #EAECC6 100%);
+	background: linear-gradient(40deg, #4CBBC4 10%, #EAECC6 100%);
+	font-family: 'Lato', sans-serif;
+}
+
+.clearfix:before,
+.clearfix:after {
+	content: " ";
+	display: table;
+}
+.clearfix:after {
+	clear:both;
+}
+.container {
+	width: 50%;
+	max-width: 750px;
+	background: $white_opaque;
+	margin:3em auto 0 auto;
+	border-radius: 7px;
+	-webkit-box-shadow: 0 0 4px 3px rgba(0,0,0,.3);
+	box-shadow: 0 0 4px 4px rgba(0,0,0,.03);
+	padding: 1em 0; 
+}
+.todo_list_title {
+	text-align: center;
+	font-weight: 700;
+	font-size: 2.5rem;
+	text-transform: uppercase;
+	color: white;
+	margin: 0;
+	a {
+	   text-decoration: none;
+	   color: white;
+	   transition: all .4s ease-in-out;
+	   &:hover {
+	   	opasity:0.4;
+
+
+	   }
+	}
+}
+.todo_list_sub_title {
+	margin: 0 0 3em 0;
+	text-align: center;
+	font-size: 0.9em;
+	color: white;
+	font-weight:100;
+}
+.index_row {
+	padding: 2em;
+	border-bottom: 1px solid rgba(250,250,250, .3);
+	.todo_list_sub_title {
+		margin-bottom: 0;
+	}
+}
+#todo_items_wrapper {
+	.row {
+		width: 100%;
+		border-top: 1px solid rgba(250,250,250, .3);
+		border-bottom: 1px solid rgba(250,250,250, .3);
+		.complete {
+			width: 10%;
+			float: left;
+			text-align: center;
+			border-right: 1px solid rgba(250,250,250, .3);
+			padding: 1em 0;
+		}
+		.todo_item {
+			width: 80%;
+			float: left;
+			p {
+				margin:0;
+				padding: 1em;
+				color: $dark;
+				font-weight:100;
+			}
+		}
+		.trash {
+			width: 10%;
+			float: left;
+			text-align: center;
+			border-left: 1 px solid rgba(250,250,250, .3);
+			padding: 1 em 0;
+		}
+		i {
+			color: white;
+			transition: all 4s ease-in-out;
+			&:hover {
+				color: $dark;
+			}
+		}
+	}
+	#form {
+		margin-top: 2em;
+		padding: 0 5%;
+		input[type="text"]{
+			width:72%;
+			margin-right:2%;
+			display: inline-block;
+			outline: none;
+			background: rgba(250,250,250,.4);
+			border: none;
+			height: 40px;
+			border-radius: 4px;
+			padding: 1em 2em;
+		}
+		input[type="submit"] {
+		background: rgba(250,250,250,.4);
+		outline: none;
+		border: none;
+		height: 40px;
+		border-radius: 4px;
+		width: 25%;
+		display: inline-block;
+		transition: all .4s ease-in-out;
+		cursor:pointer;
+		&:hover {
+			background: $dark;
+		}
+	}
+	::-webkit-input-placeholder { color: $dark;}
+
+	}
+}
+.links {
+	display: block;
+	margin: 1.5em auto 0 auto;
+	text-align: center;
+	font-size: 0.8em;
+	color: white;
+	a {
+		color: white;
+	}
+}
+.forms {
+	padding:0.5%;
+}
+label {
+	color: $dark;
+}
+input[type="text"], textarea {
+	width: 100%;
+	margin: .5em 2% 1em 0;
+	display: inline-block;
+	outline: none;
+	background: rgba(250,250,250,.4);
+	border: none;
+	height: 40px;
+	border-radius: 4px;
+	padding: 1em 2em;
+}
+textarea {
+	height: 200px;
+}
+input[type="submit"] {
+	background: white;
+	outline: none;
+	border: none;
+	height:40px;
+	border-radius: 4px;
+	width: 25%;
+	display: inline-block;
+	transition:all .4s ease-in-out;
+	cursor: pointer;
+	color: $dark;
+	&:hover {
+		background: $dark;
+		color: white;
+	}
+}
+::-webkit-input-placeholder {colour:$dark;}
+</style></head><body>
+<h3 class="todo_list_title"><%= @model.name %></h3>
 <% m = @model.id %>
 <% @task = TodoItem.where(model_id: @model.id) %>
 <ul>
-<div class ="row clearfix">
-<% @task.each do |task| %>
-
-<li>
-	<p class="todo_item_subtile"><%= task.content %></p>
-	<form onsubmit="return confirm('Are you sure you want to delete?')" action="/delete/<%= task.id %>" method="POST">
-    	<input type="hidden" name="_method" value="DELETE">
-    	<button type="submit">Delete</button></form>
-</li>
-<% end %><p></ul>
-<h5>ADD Task
-<form action="/submit/<%= @model.id %>" method="POST">
-	<input type="text" name="todo_item[content]" value="" />
-	<input type="submit" value="Submit" />
-	<input type="hidden" name="todo_item[model_id]" value="<%= m %>" />
-</form></h5></p></div>
-<a href="/">Home</a>
+<div class ="index_row">
+	<% @task.each do |task| %>
+<div id="todo_item_wrapper">
+	
+	<div class="row clearfix">
+	<p class="todo_item"><%= task.content %></p>
+	<div class="trash">
+		<a href="/delete/<%= task.id %>">
+    	<i class="fa fa-trash"></i></a>
+    	</div>
+	</div>
+	<% end %></ul>
+	<div class="forms">
+		<h5 class="todo_list_sub_title">ADD Task
+		<form action="/submit/<%= @model.id %>" method="POST">
+		<input type="text" name="todo_item[content]" value="" />
+		<input type="submit" value="Submit" />
+		<input type="hidden" name="todo_item[model_id]" value="<%= m %>" />
+		</form></h5></p>
+	</div>
+	<div class="links">
+		<a href="/">Home</a></ul>
+	</div></div>
+</div>
+	
+</body>
+</html>
 

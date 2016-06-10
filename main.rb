@@ -38,13 +38,13 @@ get '/' do
   @models = Model.all
   erb :model
 end
-delete '/delete/:id' do
+get '/delete/:id' do
   @item = TodoItem.find(params[:id])
   @item.destroy
   redirect '/'
 
 end
-delete '/:id' do
+get '/model/:id' do
   @model = Model.find(params[:id])
   @items = TodoItem.where(model_id: @model.id)
   @items.each do |item|
