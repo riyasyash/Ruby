@@ -61,8 +61,8 @@ fred.salary = 35000
 fred.salary = 40000
 fred.salary = 55000
 puts "Type in 'b' to stop notifying bank personal about the salary change,or else type anything:"
-choice = gets
-if choice = 'b'
+choice = gets.chomp
+if choice == 'b'
 	fred.removeObserver(bank_personal)
 end
 
